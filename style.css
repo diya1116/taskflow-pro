@@ -1,0 +1,1112 @@
+:root {
+    --bg: #f8fafc;
+    --side: #ffffff;
+    --card: #ffffff;
+    --text: #0f172a;
+    --text-dim: #64748b;
+    --primary: #4f46e5;
+    --border: #e2e8f0;
+    --high: #ef4444;
+    --medium: #f59e0b;
+    --low: #3b82f6;
+    --success: #10b981;
+    --primary-hover: #4338ca;
+}
+
+/* style.css: Dark Mode mein font theme ke hisab se badlega */
+
+body.dark {
+    --bg: #000000 !important;
+    --side: #000000 !important;
+    --card: #0c0c0c !important;
+    --border: #1a1a1a !important;
+
+    /* 🔥 FONT COLOR FIX: Theme ki Primary color use karein */
+    --text: var(--primary) !important; 
+    
+    /* Subtext ko thoda dhundhla (dim) rakhein usi color mein */
+    --text-dim: rgba(255, 255, 255, 0.5) !important; 
+}
+
+/* Dashboard title aur Search bar ko theme color se match karein */
+body.dark #mainTitle,
+body.dark .task h4,
+body.dark .logo {
+    color: var(--primary) !important;
+    text-shadow: 0 0 15px rgba(var(--primary-rgb), 0.3); /* Halka sa glow */
+}
+
+/* Search input ke andar ka text */
+body.dark #taskSearchInput {
+    color: var(--primary) !important;
+}
+
+body.dark #taskSearchInput::placeholder {
+    color: var(--primary);
+    opacity: 0.4;
+}
+
+/* Sidebar buttons setup */
+body.dark .nav-btn {
+    color: var(--text-dim);
+}
+body.dark .nav-btn.active {
+    color: var(--primary) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-right: 3px solid var(--primary);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #4f46e540; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+body { background: var(--bg); color: var(--text); overflow: auto; transition: background 0.3s, color 0.3s; }
+
+.app { 
+    display: grid; 
+    grid-template-columns: 280px 1fr; 
+    height: 100vh; 
+    /* 🔥 Add these lines */
+    gap: 30px; 
+    padding: 25px;
+    background: var(--bg); /* Ensure background is consistent */
+}
+
+.sidebar { background: var(--side); border-right: 1px solid var(--border); padding: 40px 24px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s ease; z-index: 100; }
+.logo { font-size: 1.5rem; color: var(--primary); font-weight: 800; margin-bottom: 40px; }
+.nav-btn { width: 100%; padding: 14px 18px; margin-bottom: 10px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; gap: 15px; border-radius: 12px; color: var(--text-dim); font-weight: 600; transition: all 0.2s ease; }
+.nav-btn.active { background: #4f46e512; color: var(--primary); transform: translateX(3px); }
+.theme-switch-btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+.main { padding: 40px 0; overflow-y: auto; height: 100vh; scroll-behavior: smooth; }
+/* Update Line 85: Reduce the left gap to move everything "little left" */
+.content-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 30px 0 40px; /* Top, Right, Bottom, Left (40px feels more premium) */
+}
+
+/* Update Line 86: Control the two-sided layout */
+.main-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; /* Changed from flex-start for better vertical centering */
+    margin-bottom: 45px; 
+    width: 100%;
+}
+
+/* New: Tool group stays right */
+.header-right-tools {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Update Line 87: Fine-tune the title */
+#mainTitle { 
+    font-size: 2.4rem; /* Slightly larger for impact */
+    font-weight: 900; 
+    letter-spacing: -1px;
+    text-align: left;
+    white-space: pre-line; /* Allows the lightning bolt/name to wrap nicely */
+}
+.calendar-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.view-pill-container { background: var(--border); padding: 5px; border-radius: 14px; display: flex; gap: 5px; }
+.v-btn { padding: 8px 18px; border-radius: 10px; border: none; background: transparent; color: var(--text-dim); font-weight: 700; cursor: pointer; transition: all 0.3s ease; }
+.v-btn.active { background: var(--card); color: var(--primary); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+.arrow-navigation { display: flex; gap: 8px; }
+.arrow-btn { width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+.arrow-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+.form-card-elite { background: var(--card); padding: 20px 45px 45px 45px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+.form-card-elite h3 { margin-top: 0; margin-bottom: 25px; }
+.field-group { margin-bottom: 25px; width: 100%; }
+.field-group label { display: block; font-size: 0.75rem; font-weight: 800; color: var(--text-dim); margin-bottom: 8px; }
+input, textarea, select { display: block; width: 100%; max-width: 100%; padding: 15px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg); color: var(--text); outline: none; font-size: 1rem; box-sizing: border-box; transition: 0.2s; }
+textarea { resize: vertical; max-height: 200px; min-height: 120px; }
+.elite-save-btn { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.2s ease; }
+.elite-save-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+.modal { position: fixed; top: 0; left: 0; width: 100%;  height: 100%; background: rgba(0, 0, 0, 0.9); display: flex; justify-content: center; align-items: flex-start; padding:20px; overflow-y: auto; z-index: 2000; backdrop-filter: blur(10px); }
+.modal-rectangle { background: var(--card); width: 850px; max-width: 100%; padding: 50px; border-radius: 35px; position: relative; border: 1px solid var(--border); margin: auto; animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes modalIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-close { position: absolute; top: 25px; right: 35px; font-size: 38px; cursor: pointer; color: var(--text-dim); }
+.modal-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 50px; margin-top: 30px; }
+.modal-field { margin-bottom: 40px; }
+.small-label { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--text-dim); margin-bottom: 12px; }
+.modal-h2 { font-size: 2.2rem; font-weight: 900; line-height: 1.1; overflow-wrap: anywhere;  word-break: break-word;}
+.modal-desc-box { max-height: 500px; overflow-y: auto; color: var(--text-dim); line-height: 1.8; font-size: 1.05rem; overflow-wrap: anywhere; word-break: break-word;}
+.meta-box { margin-bottom: 35px; }
+.val-text { font-size: 1.2rem; font-weight: 700; }
+.status-pill { display: inline-block; padding: 6px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 900; margin-top: 10px; }
+.status-pending { background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b40; }
+.status-completed { background: #10b98120; color: #10b981; border: 1px solid #10b98140; }
+.modal-footer-modern { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 30px; display: flex; gap: 15px; }
+.m-btn-edit { flex: 2; padding: 18px; border-radius: 16px; border: none; background: var(--primary); color: white; font-weight: 800; cursor: pointer; }
+.m-btn-del { flex: 1; padding: 18px; border-radius: 16px; border: none; background: #ef444415; color: #ef4444; font-weight: 800; cursor: pointer; }
+
+.calendar-panel { background: var(--card); border: 1px solid var(--border); border-radius: 28px; overflow: hidden; }
+.cal-labels-grid { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--bg); padding: 20px 0; text-align: center; font-weight: 900; font-size: 0.8rem; border-bottom: 1px solid var(--border); }
+.cal-grid-layout { display: grid; grid-template-columns: repeat(7, 1fr); background: var(--border); gap: 1px; }
+.day-box { min-height: 120px; padding: 18px; background: var(--card); cursor: pointer; transition: 0.2s; position: relative; }
+.day-box:hover { background: #4f46e508; }
+/* style.css: Repeat Options Animation */
+
+
+.toast-container { position: fixed; top: 30px; right: 30px; z-index: 9999; }
+.toast { background: var(--card); padding: 16px 25px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); display: flex; align-items: center; gap: 15px; font-weight: 700; margin-bottom: 10px; animation: toastIn 0.4s ease-out forwards; }
+/* style.css: Vibrant Pop-up Colors */
+
+.toast.success { 
+    background: #0ea5e9 !important; /* Theme blue */
+    color: white !important; 
+    border: none !important;
+}
+
+.toast.error { 
+    background: #ef4444 !important; /* Bright red for errors */
+    color: white !important; 
+    border: none !important;
+}
+
+.toast.info { 
+    background: #6366f1 !important; /* Indigo for info */
+    color: white !important; 
+    border: none !important;
+}
+
+/* Toast shadow for depth */
+.toast {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+    min-width: 350px !important;
+}
+@keyframes toastIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.task { background: var(--card); padding: 25px; border-radius: 22px; border: 1px solid var(--border); margin-bottom: 15px; display: flex; align-items: center; cursor: pointer; transition: all 0.3s; }
+.task:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+.task.completed { opacity: 0.4; }
+.check-circle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; margin-left: auto; }
+.completed .check-circle { background: #10b981; border-color: #10b981; color: white; }
+
+.hidden { display: none !important; }
+
+/* Triage */
+.triage-item { background: var(--bg); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; gap: 15px; transition: 0.2s ease; }
+.triage-item:hover { border-color: var(--medium); }
+.triage-info { flex-grow: 1; }
+.triage-title { font-weight: 800; font-size: 1rem; margin-bottom: 6px; }
+.triage-date { font-size: 0.75rem; color: var(--high); font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+.triage-action { width: 180px; padding: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer; background: var(--card); }
+#triageModal .modal-rectangle {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; 
+    padding-bottom: 30px;
+}
+
+#triageList {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    margin-bottom: 20px;
+    padding-right: 10px;
+    
+}
+
+/* Breakdown & Collapsible Tasks */
+.m-btn-break { flex: 1.5; padding: 18px; border-radius: 16px; border: none; background: #8b5cf615; color: #8b5cf6; font-weight: 800; cursor: pointer; transition: 0.2s; }
+.m-btn-break:hover { background: #8b5cf630; transform: translateY(-2px); }
+.sub-task { margin-left: 50px; background: transparent; border: 1px dashed var(--border); padding: 15px 25px; box-shadow: none; }
+.sub-task:hover { border-color: var(--primary); transform: translateX(5px); }
+.subtask-toggle { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: var(--bg); color: var(--text-dim); border: 1px solid var(--border); cursor: pointer; margin-right: 15px; transition: 0.2s; }
+.subtask-toggle:hover { background: #8b5cf620; color: #8b5cf6; border-color: #8b5cf6; }
+
+/* 🔥 ZEN MODE 🔥 */
+.zen-wrapper { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 65vh; }
+.zen-timer { font-size: 6rem; font-weight: 900; color: var(--primary); font-variant-numeric: tabular-nums; margin-bottom: 30px; line-height: 1; }
+/* Remove arrows from custom time inputs */
+#zenMinutesInput::-webkit-outer-spin-button, #zenMinutesInput::-webkit-inner-spin-button, 
+#zenHoursInput::-webkit-outer-spin-button, #zenHoursInput::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* 🔥 SORT DROPDOWN STYLING 🔥 */
+.sort-container {
+    display: flex;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: 12px;
+    gap: 10px;
+}
+
+.sort-container i {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+#taskSortSelect {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    width: auto;
+}
+
+#taskSortSelect option {
+    background: var(--card);
+    color: var(--text);
+}
+
+/* --- Default Light Theme --- */
+:root, 
+
+/* --- 🔥 15 PREMIUM ADOBE COLOR PALETTES --- */
+
+/* 1. Pastel Paradise (R1,P1) */
+[data-theme="pastel"] { --bg: #fdf2f8; --side: #ffffff; --card: #ffffff; --text: #4a044e; --text-dim: #9d174d; --primary: #f472b6; --border: #fce7f3; }
+
+/* 5. Sage Forest (R2,P3) */
+[data-theme="sage"] { --bg: #f0fdf4; --side: #ffffff; --card: #ffffff; --text: #064e3b; --text-dim: #15803d; --primary: #10b981; --border: #dcfce7; }
+
+/* 7. Modern Cream (R2,P5) */
+[data-theme="cream"] { --bg: #fffdf5; --side: #ffffff; --card: #ffffff; --text: #451a03; --text-dim: #b45309; --primary: #d97706; --border: #fef3c7; }
+
+/* 9. Soft Lavender (R3,P6) */
+[data-theme="lavender"] { --bg: #faf5ff; --side: #ffffff; --card: #ffffff; --text: #3b0764; --text-dim: #7e22ce; --primary: #a855f7; --border: #f3e8ff; }
+
+/* 10. Corporate Blue (R4,P1) */
+[data-theme="pro-blue"] { --bg: #f8fafc; --side: #ffffff; --card: #ffffff; --text: #1d4fd8; --text-dim: #000000; --primary: #2563eb; --border: #e2e8f0; }
+
+/* Theme Option Styling in Modal */
+.theme-opt {
+    padding: 15px; border-radius: 14px; border: 2px solid var(--border);
+    cursor: pointer; text-align: center; transition: 0.2s;
+}
+.theme-opt:hover { border-color: var(--primary); transform: translateY(-3px); }
+.theme-opt.active { border-color: var(--primary); background: var(--border); }
+
+/* 🔥 SEARCH BAR STYLING 🔥 */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 15px;
+    gap: 15px;
+    width: 350px; /* Responsive zoom ke liye fixed width */
+    max-width: 100%;
+    transition: 0.3s ease;
+}
+
+.search-container:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.1);
+}
+
+.search-container i {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+#taskSearchInput {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0;
+    outline: none;
+    width: 100%;
+}
+
+#taskSearchInput::placeholder {
+    color: var(--text-dim);
+    opacity: 0.6;
+}
+
+/* --- 🔥 ELITE WELCOME & AUTH DESIGN (UPDATED) --- */
+
+/* style.css: Elite Product Landing Design */
+
+/* style.css: Elite Light Blue Landing Page */
+
+.welcome-overlay {
+    position: fixed !important;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 99999;
+    background: #ffffff !important; /* 🔥 Pure White Background */
+    color: #0f172a; /* Dark Slate text */
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+.landing-container {
+    max-width: 1100px;
+    width: 90%;
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Logo & Navigation */
+.landing-nav { width: 100%; display: flex; justify-content: flex-start; margin-bottom: 120px; }
+.landing-nav .welcome-logo { display: flex; align-items: center; gap: 10px; color: #0f172a; }
+.landing-nav .welcome-logo i { color: #0ea5e9; font-size: 1.5rem; } /* Light Blue Bolt */
+.landing-nav .welcome-logo h1 { font-size: 1.5rem; font-weight: 800; }
+.landing-nav .welcome-logo h1 span { color: #0ea5e9; }
+
+/* Hero Text */
+.hero-title { 
+    font-size: 5.5rem; 
+    font-weight: 900; 
+    line-height: 1.1; 
+    letter-spacing: -3px; 
+    color: #0f172a; 
+    margin-bottom: 30px; 
+    animation: fadeInUp 0.8s ease;
+}
+
+/* 🔥 LIGHT BLUE GRADIENT TEXT */
+.hero-title span {
+    color: #0ea5e9;
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+    display: inline-block;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* THE FIX: This gives the 'y' and 'g' tails enough room */
+    padding-bottom: 0.15em; 
+    margin-bottom: -0.15em; 
+}
+
+.hero-subtitle { 
+    font-size: 1.3rem; 
+    color: #64748b; 
+    max-width: 750px; 
+    line-height: 1.6; 
+    margin: 0 auto 60px; 
+}
+
+/* Capsule Buttons */
+.hero-btns { display: flex; gap: 20px; justify-content: center; margin-bottom: 120px; }
+.hero-btns .w-btn {
+    padding: 22px 55px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border-radius: 100px; /* Fully Rounded */
+    border: none;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-btn { 
+    background: #0ea5e9; 
+    color: white; 
+    box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3); 
+}
+.login-btn:hover { background: #0284c7; transform: translateY(-3px); }
+
+.signup-btn { background: #f1f5f9; color: #0f172a; }
+.signup-btn:hover { background: #e2e8f0; transform: translateY(-3px); }
+
+/* Feature Bar */
+.landing-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 50px;
+    width: 100%;
+}
+
+.l-feat { display: flex; align-items: center; gap: 10px; color: #64748b; font-weight: 700; font-size: 0.95rem; }
+.l-feat i { color: #0ea5e9; font-size: 1.2rem; }
+
+/* Auth Box Light UI Fix */
+.auth-box {
+    background: white !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 40px !important;
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15) !important;
+}
+.auth-box h2, .auth-box p { color: #0f172a !important; }
+.auth-input-group input { background: #f8fafc !important; color: #0f172a !important; border-color: #e2e8f0 !important; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- 🔥 AUTH UI CONTAINERS (WIDE & SPACIOUS) --- */
+/* style.css: Full-Page Auth UI */
+
+/* style.css: Elite Full-Page Auth UI Fix */
+
+.auth-full-page {
+    position: fixed !important;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #ffffff !important;
+    z-index: 100000;
+    display: flex; justify-content: center; align-items: center;
+    overflow-y: auto;
+}
+
+.auth-view {
+    width: 100%; min-height: 100vh;
+    display: flex; justify-content: center; align-items: center;
+    padding: 60px 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+.auth-card { width: 100%; max-width: 480px; text-align: center; }
+.signup-card { max-width: 600px; }
+
+.auth-header h2 { font-size: 3rem; font-weight: 900; color: #0f172a; letter-spacing: -1.5px; }
+.auth-header p { color: #64748b; margin-bottom: 40px; font-weight: 600; }
+
+.auth-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+.input-box { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.input-box label { font-size: 0.75rem; font-weight: 800; color: #94a3b8; }
+
+.input-box input, .input-box select {
+    padding: 18px; border-radius: 15px; border: 1px solid #e2e8f0;
+    background: #f8fafc; font-size: 1rem; transition: 0.3s;
+}
+
+.input-box input:focus { border-color: #0ea5e9; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); }
+.full-width { grid-column: span 2; }
+
+.main-auth-btn {
+    background: #0ea5e9; color: white; border: none; padding: 22px;
+    border-radius: 100px; font-size: 1.1rem; font-weight: 800;
+    cursor: pointer; margin-top: 20px; transition: 0.3s;
+}
+.main-auth-btn:hover { background: #0284c7; transform: translateY(-3px); }
+
+.close-auth {
+    position: absolute; top: 40px; left: 40px;
+    background: #f1f5f9; border: none; width: 50px; height: 50px;
+    border-radius: 50%; color: #64748b; cursor: pointer;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes welcomeIn {
+    from { opacity: 0; transform: scale(1.05); filter: blur(15px); }
+    to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+@keyframes authFadeIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.welcome-fade-out { opacity: 0; transform: scale(1.1); pointer-events: none; }
+.auth-box-out { opacity: 0; transform: scale(0.9); pointer-events: none; }
+
+/* Hidden Class Utility */
+.hidden { display: none !important; }
+
+.forgot-link {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--primary);
+    cursor: pointer;
+    font-weight: 700;
+    margin-top: -5px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.forgot-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+#otpFields.hidden { display: none !important; }
+
+#toastContainer {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 99999 !important; /* Video aur Auth box se upar rakhne ke liye */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    pointer-events: none; /* Taaki clicks piche pass ho sakein */
+}
+
+.toast {
+    pointer-events: auto; /* Sirf toast par click kaam kare */
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 18px 25px;
+    border-radius: 18px;
+    font-weight: 700;
+    min-width: 320px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    animation: toastSlideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- 🔥 PROFILE MODAL STYLES --- */
+.profile-card {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 500px;
+    border-radius: 35px;
+    padding: 40px;
+    position: relative;
+    color: white;
+}
+
+.profile-header { text-align: center; margin-bottom: 30px; }
+
+.profile-pic-container {
+    position: relative;
+    width: 120px; height: 120px;
+    margin: 0 auto 15px;
+}
+
+.profile-pic-container img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 4px solid var(--primary);
+    object-fit: cover;
+}
+
+.edit-pic-btn {
+    position: absolute; bottom: 5px; right: 5px;
+    background: var(--primary); border: none;
+    color: white; width: 35px; height: 35px;
+    border-radius: 50%; cursor: pointer;
+}
+
+.profile-info-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px; margin-bottom: 30px;
+    background: rgba(255,255,255,0.03);
+    padding: 20px; border-radius: 20px;
+}
+
+.info-item span { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.info-item p { font-weight: 700; margin-top: 5px; }
+
+.p-btn {
+    width: 100%; padding: 15px;
+    border-radius: 15px; border: none;
+    font-weight: 800; cursor: pointer;
+    margin-bottom: 10px; transition: 0.3s;
+}
+
+.p-btn.secondary { background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); }
+.p-btn.logout { background: #f59e0b20; color: #f59e0b; }
+.p-btn.delete { background: #ef444420; color: #ef4444; }
+.p-btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
+
+.profile-hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0; }
+.close-profile {
+    position: absolute; top: 25px; right: 25px;
+    background: none; border: none; color: white; font-size: 2rem; cursor: pointer;
+}
+
+/* --- 🔥 DASHBOARD PROFILE VIEW --- */
+.profile-section-container {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.profile-main-card {
+    background: white; /* Dark mode mein automatically adjust ho jayega agar variables use kiye hain */
+    width: 100%;
+    max-width: 700px;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: var(--shadow);
+}
+
+.profile-header-alt {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 30px;
+}
+
+.large-avatar {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--primary);
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.detail-box {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.detail-box span { font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase; }
+.detail-box p { font-size: 1.1rem; font-weight: 800; margin-top: 5px; color: var(--dark); }
+
+.security-btns {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.p-btn-alt {
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.p-btn-alt.logout { color: #f59e0b; border-color: #f59e0b30; }
+.p-btn-alt.delete { color: #ef4444; border-color: #ef444430; }
+
+.security-form {
+    margin-top: 25px;
+    padding: 25px;
+    background: #f8fafc;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 🔥 VIDEO-INSPIRED WELCOME UI 🔥 */
+
+.welcome-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 85vh;
+    width: 100%;
+    z-index: 100;
+}
+
+.v-welcome-title {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.v-welcome-tagline {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #f472b6; /* Pinkish-Purple color from video */
+    text-transform: uppercase;
+}
+
+/* Carousel Deck Styling */
+.v-carousel-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.v-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    position: absolute;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    transition: 0.5s ease;
+}
+
+.v-card-main {
+    width: 450px;
+    height: 280px;
+    z-index: 10;
+    padding: 25px;
+}
+
+.v-card-back-left {
+    width: 180px; height: 180px;
+    left: 20%; transform: rotate(-10deg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 5; opacity: 0.6;
+}
+
+.v-card-back-right {
+    width: 180px; height: 180px;
+    right: 20%; transform: rotate(10deg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 5; opacity: 0.6;
+}
+
+/* Mock UI Elements */
+.v-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; font-weight: 800; color: #a855f7; }
+.v-mock-item { 
+    background: rgba(255,255,255,0.03); 
+    padding: 12px; border-radius: 12px; 
+    margin-bottom: 10px; display: flex; align-items: center; 
+    font-size: 0.8rem; font-weight: 600; 
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 12px; }
+.purple { background: #a855f7; } .green { background: #10b981; } .yellow { background: #f59e0b; }
+.v-pill { margin-left: auto; font-size: 0.6rem; padding: 4px 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); }
+
+/* Stacked Buttons */
+/* style.css: Side-by-Side Bottom Buttons */
+
+.welcome-footer-btns {
+    position: absolute; 
+    bottom: 60px; /* Neeche se wahi distance */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Buttons ko center mein lao */
+    gap: 40px; /* In dono ke beech ka gap (ise kam-jyada kar sakte ho) */
+    padding: 0; /* Ab sides se padding ki zarurat nahi */
+    pointer-events: none;
+}
+
+.welcome-footer-btns .w-btn {
+    pointer-events: auto;
+    width: 240px; /* Standard aesthetic width */
+    padding: 18px;
+    border-radius: 22px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+/* Darkness kam karne wala overlay fix */
+.video-tint {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Pehle 0.7/0.98 tha, ab 0.35/0.50 kar diya hai */
+    background: linear-gradient(135deg, rgba(16, 17, 24, 0.35) 0%, rgba(17, 24, 39, 0.50) 100%);
+    z-index: -1;
+}
+
+/* Auth Switch Text Styling */
+.auth-switch-text {
+    margin-top: 25px !important;
+    font-size: 1.05rem !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+}
+
+.auth-switch-text span {
+    color: #1900ff; /* Nordic Purple color */
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 5px;
+    transition: 0.3s;
+}
+
+.auth-switch-text span:hover {
+    color: white;
+    filter: drop-shadow(0 0 10px #4b4682);
+}
+
+/* style.css: Elite Minimalist UI Refinement */
+
+/* Font & Spacing fixes from images */
+.hero-title {
+    font-size: 5.5rem !important; /* Extremely Bold like Any.do */
+    font-weight: 900 !important;
+    letter-spacing: -3px; /* Clean look from image */
+    line-height: 1.1;
+    color: #0f172a;
+}
+.hero-title span { color: #0ea5e9; } /* Light Blue accent */
+.hero-subtitle { font-size: 1.3rem; color: #64748b; max-width: 700px; margin-bottom: 60px; }
+
+/* Capsule Buttons */
+.hero-btns { gap: 20px; margin-bottom: 120px; }
+.hero-btns .w-btn {
+    padding: 22px 55px !important;
+    border-radius: 100px !important; /* Pill shaped */
+}
+
+/* Premium Input Boxes */
+.auth-input-group input {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    background: #f8fafc !important; /* Cleaner white alternative */
+}
+.auth-input-group input:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); /* Subtle Blue glow */
+}
+
+/* 🔥 Forgot Password Link */
+.forgot-link {
+    position: absolute;
+    right: 15px; top: 18px; /* Input ke andar position */
+    font-size: 0.8rem;
+    color: #0ea5e9;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.forgot-link:hover { text-decoration: underline; color: #0284c7; }
+
+/* auth-box refined look */
+.auth-box { border-radius: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
+
+/* style.css: Forgot Link Style */
+.forgot-link {
+    position: absolute;
+    right: 15px; top: 18px;
+    font-size: 0.8rem;
+    color: #0ea5e9;
+    font-weight: 800;
+    cursor: pointer;
+    z-index: 5;
+}
+.forgot-link:hover { text-decoration: underline; }
+
+/* style.css: Stop Repeat Button Color */
+#modalStopRepeatBtn:hover {
+    background: #f59e0b30 !important;
+    transform: translateY(-2px);
+}
+
+/* --- New Day Picker Styles --- */
+.day-pill {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text-dim);
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.day-pill:hover {
+    border-color: var(--primary);
+}
+
+.day-pill.active {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+}
+
+/* --- Bulk Action Styles --- */
+.bulk-bar {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--primary);
+    padding: 15px 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    z-index: 10000;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { bottom: -100px; opacity: 0; }
+    to { bottom: 30px; opacity: 1; }
+}
+
+.bulk-info { font-weight: 800; color: var(--text); }
+.bulk-btns { display: flex; gap: 15px; }
+
+.bulk-btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.bulk-btn.archive { background: #6366f120; color: #6366f1; }
+.bulk-btn.delete { background: #ef444420; color: #ef4444; }
+.bulk-btn:hover { transform: translateY(-2px); filter: brightness(0.9); }
+
+/* Custom Checkbox Styling */
+.task-checkbox {
+    width: 22px;
+    height: 22px;
+    margin-right: 15px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+/* --- Unified Bulk Bar --- */
+.bulk-bar {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--primary);
+    padding: 10px 25px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    z-index: 10000;
+    animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.bulk-group { display: flex; align-items: center; gap: 12px; }
+
+.bulk-count-pill {
+    background: var(--primary);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 900;
+}
+
+.bulk-sep { width: 1px; height: 30px; background: var(--border); }
+
+.bulk-sub-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.bulk-sub-btn:hover { color: var(--primary); }
+.bulk-sub-btn.cancel { color: #ef4444; }
+
+/* Keep your existing .bulk-btn archive/delete styles but ensure they are compact */
+.bulk-btn {
+    padding: 10px 18px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bulk-btn.archive i.fa-box-open {
+    color: #10b981; /* Success Green hint for restoration */
+}
+
+/* Ensure the button stays sleek */
+.bulk-btn {
+    transition: all 0.2s ease;
+}
+
+.bulk-btn:active {
+    transform: scale(0.95);
+}
+
+/* 1. Selection Mode state */
+.selection-mode .task-checkbox {
+    width: 22px;
+    opacity: 1;
+    margin-right: 15px;
+}
+
+/* 2. Hide checkboxes by default with a smooth transition */
+.task-checkbox {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 3. Highlight the ENTIRE CARD when selected */
+/* style.css: Elite Management Toggle */
+.management-toggle {
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.management-toggle i {
+    color: var(--primary);
+}
+
+/* When the mode is active, we turn the button Purple */
+.selection-mode-active #selectionModeBtn {
+    background: rgba(168, 85, 247, 0.15) !important; /* Nordic Purple tint */
+    border: 1px solid #a855f7 !important;
+    color: #a855f7 !important;
+}
+
+.selection-mode-active #selectionModeBtn i {
+    color: #a855f7 !important;
+}
+
+/* style.css */
+
+.switch-text {
+    margin-top: 30px !important; /* This creates the breathing room */
+    font-size: 0.95rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.switch-text span {
+    color: #0ea5e9;
+    cursor: pointer;
+    font-weight: 800;
+    margin-left: 5px;
+    transition: 0.2s;
+}
+
+.switch-text span:hover {
+    text-decoration: underline;
+    color: #0284c7;
+}

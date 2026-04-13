@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskFlow-Pro | Absolute Final</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div id="toastContainer" class="toast-container" style="z-index: 200000 !important;"></div>
+
+    <div id="welcomePage" class="welcome-overlay">
+    
+        <div class="landing-container">
+            <nav class="landing-nav">
+                <div class="welcome-logo"><i class="fas fa-bolt"></i> <h1>Task<span>Flow-pro</span></h1></div>
+            </nav>
+
+            <div class="hero-section" id="heroContent">
+                <h1 class="hero-title">Everything you need to <br><span>stay organized.</span></h1>
+                <div class="hero-btns">
+                    <button class="w-btn login-btn" onclick="showAuth('login')">Log In</button>
+                    <button class="w-btn signup-btn" onclick="showAuth('signup')">Join for Free</button>
+                </div>
+            </div>
+
+            <div id="authPage" class="auth-full-page hidden">
+    
+                <div id="loginPage" class="auth-view hidden">
+                    <div class="auth-card">
+                        <button class="close-auth" onclick="showWelcome()"><i class="fas fa-arrow-left"></i></button>
+                        <div class="auth-header">
+                            <h2>Welcome Back</h2>
+                            <p>Enter your Email or Mobile to continue</p>
+                        </div>
+                        <div class="auth-form">
+                            <div class="input-box">
+                                <label>IDENTIFIER</label>
+                                <input type="text" id="loginId" placeholder="Email or Mobile Number">
+                            </div>
+                            <div class="input-box">
+                                <label>Password</label>
+                                <div style="position: relative;">
+                                    <input type="password" id="loginPass" placeholder="••••••••">
+                                    <span class="forgot-link" onclick="showAuth('forgot')" style="position: absolute; right: 15px; top: 18px; font-size: 0.8rem; color: #0ea5e9; font-weight: 800; cursor: pointer; z-index: 10;">Forgot?</span>
+                                </div>
+                            </div>
+                            <button class="main-auth-btn" onclick="handleLogin()">Authorize Access</button>
+                            <p class="switch-text">New to TaskFlow? <span onclick="showAuth('signup')">Create Account</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                                <div id="forgotPage" class="auth-view hidden">
+                    <div class="auth-card">
+                        <button class="close-auth" onclick="showAuth('login')"><i class="fas fa-arrow-left"></i></button>
+                        <div class="auth-header">
+                            <h2>Reset Password</h2>
+                            <p id="resetStepText">Provide your account identifier</p>
+                        </div>
+                        <div class="auth-form">
+                            <div id="resetInputGroup" class="input-box">
+                                <label>Email or Mobile</label>
+                                <input type="text" id="resetIdentifier" placeholder="Identifier">
+                            </div>
+                            <div id="otpFields" class="hidden" style="display: flex; flex-direction: column; gap: 15px;">
+                                <div class="input-box"><label>CODE</label><input type="text" id="verificationCode" placeholder="4-digit code"></div>
+                                <div class="input-box"><label>NEW PASSWORD</label><input type="password" id="newPass" placeholder="Min. 6 characters"></div>
+                            </div>
+                            <button class="main-auth-btn" id="resetActionBtn" onclick="sendResetCode()">Send Verification Code</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="signupPage" class="auth-view hidden">
+                    <div class="auth-card signup-card">
+                        <button class="close-auth" onclick="showWelcome()"><i class="fas fa-arrow-left"></i></button>
+                        <div class="auth-header">
+                            <h2>Join TaskFlow</h2>
+                            <p>Start your productivity journey today</p>
+                        </div>
+                        <div class="auth-form-grid">
+                            <div class="input-box"><label>Full Name</label><input type="text" id="regName" placeholder="John Doe"></div>
+                            <div class="input-box"><label>Age</label><input type="number" id="regAge" placeholder="24"></div>
+                            <div class="input-box">
+                                <label>Gender</label>
+                                <select id="regGender">
+                                    <option value="">Select</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="input-box"><label>Mobile</label><input type="tel" id="regMobile" placeholder="+91 XXXX"></div>
+                            <div class="input-box full-width"><label>Email</label><input type="email" id="regEmail" placeholder="name@example.com"></div>
+                            <div class="input-box full-width"><label>Password</label><input type="password" id="regPass" placeholder="••••••••"></div>
+                            <button class="main-auth-btn full-width" onclick="handleSignup()">Create My Account</button>
+                            <p class="switch-text full-width">Already a user? <span onclick="showAuth('login')">Log In</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app">
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-brand">
+                    <h2 class="logo"><i class="fas fa-bolt"></i> TaskFlow-pro</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <button id="selectionModeBtn" class="management-toggle-btn" onclick="toggleSelectionMode()" style="margin-bottom: 20px; border: 1px dashed #a855f7; width: 100%; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 15px; background: transparent; color: var(--text-dim);">
+                        <i class="fas fa-tasks" style="color: #a855f7;"></i> <span>Management Mode</span>
+                    </button>
+                    <button data-section="profile" class="nav-btn">
+                        <i class="fas fa-user-circle"></i> Your Profile
+                    </button>
+                    <button data-section="add" class="nav-btn">
+                        <i class="fas fa-plus-square"></i> Add Task
+                    </button>
+                    <button data-section="all" class="nav-btn active">
+                        <i class="fas fa-th-large"></i> All Tasks
+                    </button>
+                    <button data-section="pending" class="nav-btn">
+                        <i class="fas fa-clock"></i> Pending
+                    </button>
+                    <button data-section="completed" class="nav-btn">
+                        <i class="fas fa-check-circle"></i> Completed
+                    </button>
+                    <button data-section="calendar" class="nav-btn">
+                        <i class="fas fa-calendar-alt"></i> Calendar
+                    </button>
+                    
+                    <button id="openThemesBtn" class="nav-btn">
+                        <i class="fas fa-palette"></i> Themes
+                    </button>
+                    <button data-section="archived" class="nav-btn">
+                        <i class="fas fa-archive"></i> Archive
+                    </button>
+                    
+    
+                    <div id="themesModal" class="modal hidden">
+                        <div class="modal-rectangle" style="max-width: 600px;">
+                            <span class="modal-close" onclick="closeModal('themesModal')">&times;</span>
+                            <h2 style="font-weight:900; margin-bottom:10px;">Select Theme</h2>
+                            <p style="color:var(--text-dim); margin-bottom:25px;">Personalize your workspace with a premium palette.</p>
+                            
+                            <div id="themesGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px;">
+                                </div>
+                        </div>
+                    </div>
+
+                    <div style="height: 1px; background: var(--border); margin: 15px 0;"></div>
+                    <div style="padding: 0 15px; font-size: 0.75rem; font-weight: 800; color: var(--text-dim); margin-bottom: 10px; letter-spacing: 0.05em;">PROJECTS</div>
+                    <button data-section="personal" class="nav-btn"><i class="fas fa-user"></i> Personal</button>
+                    <button data-section="work" class="nav-btn"><i class="fas fa-briefcase"></i> Work</button>
+                    <button data-section="other" class="nav-btn"><i class="fas fa-folder"></i> Other</button>
+
+                </nav>
+            </div>
+            <div class="sidebar-bottom">
+                <button id="themeToggle" class="theme-switch-btn">
+                    <i class="fas fa-moon"></i> <span id="themeLabel">Dark Mode</span>
+                </button>
+                <div style="margin-top: 20px; text-align: center; font-size: 0.7rem; color: var(--text-dim); font-weight: 600; line-height: 1.5;">
+                    © 2026 Diya Ghasadiya.<br>All Rights Reserved.
+                </div>
+            </div>
+        </aside>
+
+        <main class="main">
+            <div class="content-container">
+                <header class="main-header">
+                    <div class="header-left">
+                        <h1 id="mainTitle">All Tasks</h1>
+                    </div>
+                    <div class="search-container"><i class="fas fa-search"></i>
+                        <input type="text" id="taskSearchInput" placeholder="Search tasks or descriptions...">
+                    </div>
+                    <div id="sortControls" class="sort-container"><i class="fas fa-sort-amount-down"></i>
+                        <select id="taskSortSelect">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="recently_edited">Recently Edited</option>
+                            <option value="date_asc">Date (Earliest First)</option>
+                            <option value="date_desc">Date (Latest First)</option>
+                            <option value="priority_smart">Smart Priority (Date + Priority)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-container" style="display: flex; align-items: center; gap: 10px; margin-left: 20px; background: var(--card); border: 1px solid var(--border); padding: 8px 15px; border-radius: 12px;">
+                        <input type="checkbox" id="repeatingFilter" style="width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer;">
+                        <label for="repeatingFilter" style="font-size: 0.75rem; font-weight: 800; color: var(--text-dim); cursor: pointer; white-space: nowrap;">SHOW REPEATING TASKS</label>
+                    </div>
+                    </div>
+                    <div id="calendarControls" class="calendar-controls hidden">
+                        <div class="view-pill-container">
+                            <button data-view="day" class="v-btn">Day</button>
+                            <button data-view="week" class="v-btn">Week</button>
+                            <button data-view="month" class="v-btn active">Month</button>
+                        </div>
+                        <div class="cal-nav-group">
+                            <h2 id="calendarMonthYear"></h2>
+                            <div class="arrow-navigation">
+                                <button id="prevBtn" class="arrow-btn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button id="nextBtn" class="arrow-btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <section id="taskSection" class="section"></section>
+
+                <section id="addSection" class="section hidden">
+                    <div class="form-card-elite">
+                        <h3 id="formHeaderTitle">
+                            <i class="fas fa-pen-nib"></i> Create New Task
+                        </h3>
+                        <input type="hidden" id="editTaskId">
+                        <div class="field-group">
+                            <label>TASK TITLE</label>
+                            <input id="title" placeholder="e.g. Redesign Dashboard">
+                        </div>
+                        <div class="field-group">
+                            <label>DESCRIPTION</label>
+                            <textarea id="desc" rows="5" placeholder="Detailed notes..."></textarea>
+                        </div>
+                        
+                        <div class="field-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 15px;">
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label>DUE DATE</label>
+                                <input type="date" id="deadline">
+                            </div>
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label>TIME</label>
+                                <input type="time" id="taskTime" value=""> </div>
+                            <div class="field-group" style="margin-bottom: 0; position: relative;">
+                                <label>REMINDER</label>
+                                <select id="reminderOffset">
+                                    <option value="none" selected>None</option> <option value="0">At time of task</option>
+                                    <option value="15">15 mins before</option>
+                                    <option value="custom">Custom Date & Time</option>
+                                </select>
+                                <input type="datetime-local" id="customReminder" class="hidden" style="margin-top: 10px; background: #8b5cf615; border-color: #8b5cf6;">
+                            </div>
+                        </div>
+                        
+                        <div class="field-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label>PRIORITY</label>
+                                <select id="priority">
+                                    <option value="high">High (Red)</option>
+                                    <option value="medium">Medium (Yellow)</option>
+                                    <option value="low">Low (Blue)</option>
+                                </select>
+                            </div>
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label>PROJECT</label>
+                                <select id="project">
+                                    <option value="personal">Personal</option>
+                                    <option value="work">Work</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="field-group" style="margin-bottom: 0;">
+                                <label>REPEAT</label>
+                                <select id="repeat">
+                                    <option value="none">None</option>
+                                    <option value="custom_days">Specific Days</option>
+                                </select>
+                            </div>
+
+                            <div id="dayPickerContainer" class="hidden" style="margin-top: 15px; grid-column: span 3;">
+                                <label class="small-label">SELECT DAYS</label>
+                                <div class="day-picker-grid" style="display: flex; gap: 10px; margin-top: 5px;">
+                                    <button type="button" class="day-pill" data-day="1">M</button>
+                                    <button type="button" class="day-pill" data-day="2">T</button>
+                                    <button type="button" class="day-pill" data-day="3">W</button>
+                                    <button type="button" class="day-pill" data-day="4">T</button>
+                                    <button type="button" class="day-pill" data-day="5">F</button>
+                                    <button type="button" class="day-pill" data-day="6">S</button>
+                                    <button type="button" class="day-pill" data-day="0">S</button>
+                                </div>
+                            </div>
+
+                            <div class="field-group" style="margin-bottom: 25px; grid-column: span 3;">
+                            <label>SUBTASKS</label>
+                            <div id="createSubtaskList" style="margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px;"></div>
+                            
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="createSubtaskInput" placeholder="+ Add a subtask..." style="flex-grow: 1; background: var(--bg); border: 1px dashed var(--primary); padding: 12px; border-radius: 12px; font-size: 0.9rem;">
+                                <button type="button" id="addTempSubtaskBtn" class="v-btn" style="background: #a855f7; color: white; padding: 10px 20px; border-radius: 12px;">Add</button>
+                            </div>
+                        </div>
+                            
+                        </div>
+                        
+                        <button id="saveBtn" class="elite-save-btn">
+                            Save Task <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </section>
+
+                <section id="calendarSection" class="section hidden">
+                    <div class="calendar-panel">
+                        <div id="calendarLabelsRow" class="cal-labels-grid">
+                            <div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
+                        </div>
+                        <div id="calendarGrid" class="cal-grid-layout"></div>
+                    </div>
+                </section>
+
+                <section id="zenSection" class="section hidden">
+                    <div class="zen-wrapper">
+                        <div class="form-card-elite" style="text-align: center; padding: 60px 40px; border: 2px solid var(--primary); max-width: 650px; width: 100%;">
+                            <span class="small-label" style="color: var(--primary);">CURRENT FOCUS</span>
+                            <h4 id="zenTaskTitle" style="font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; line-height: 1.2;">Task Title</h4>
+                            
+                            <div id="zenInputPhase">
+                                <label style="font-weight: 800; color: var(--text-dim); font-size: 0.85rem; letter-spacing: 0.05em;">SET YOUR TIME</label>
+                                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin: 25px auto;">
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <input type="number" id="zenHoursInput" value="0" min="0" max="23" style="font-size: 3rem; text-align: center; font-weight: 900; padding: 15px; width: 120px; color: var(--primary); background: transparent; border: 2px dashed var(--border); border-radius: 14px;">
+                                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-dim); margin-top: 8px;">HOURS</span>
+                                    </div>
+                                    <div style="font-size: 3rem; font-weight: 900; color: var(--border); padding-bottom: 25px;">:</div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <input type="number" id="zenMinutesInput" value="25" min="0" max="59" style="font-size: 3rem; text-align: center; font-weight: 900; padding: 15px; width: 120px; color: var(--primary); background: transparent; border: 2px dashed var(--border); border-radius: 14px;">
+                                        <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-dim); margin-top: 8px;">MINUTES</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="zenTimerPhase" class="hidden">
+                                <div id="zenTimerDisplay" class="zen-timer">25:00</div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                                <button id="zenStartBtn" class="m-btn-break" style="flex: 0; padding: 18px 40px;">
+                                    <i class="fas fa-play"></i> Start Timer
+                                </button>
+                                <button id="zenCompleteBtn" class="m-btn-edit hidden" style="flex: 0; padding: 18px 40px; background: var(--success);">
+                                    <i class="fas fa-check"></i> Conquered
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="profileModal" class="modal-overlay hidden">
+        <div class="profile-card">
+            <button class="close-profile" onclick="closeModal('profileModal')">&times;</button>
+            
+            <div class="profile-header">
+                <div class="profile-pic-container">
+                    <img id="displayUserPic" src="https://ui-avatars.com/api/?name=User&background=a855f7&color=fff" alt="Profile">
+                    <button class="edit-pic-btn"><i class="fas fa-camera"></i></button>
+                </div>
+                <h2 id="profName">User Name</h2>
+                <p id="profEmail">user@example.com</p>
+            </div>
+
+            <div class="profile-info-grid">
+                <div class="info-item"><span>Age</span><p id="profAge">20</p></div>
+                <div class="info-item"><span>Mobile</span><p id="profMobile">+91 XXXXX XXXXX</p></div>
+                <div class="info-item"><span>Gender</span><p id="profGender">Male</p></div>
+            </div>
+
+            <div class="profile-actions">
+                <div class="action-group">
+                    <h3>Security Settings</h3>
+                    <button class="p-btn secondary" onclick="togglePassReset()">Change Password <i class="fas fa-lock"></i></button>
+                    
+                    <div id="passResetFields" class="hidden auth-input-group" style="margin-top:15px;">
+                        <input type="password" id="oldPassInput" placeholder="Enter Old Password">
+                        <p style="font-size: 0.7rem; margin: 5px 0;">OR</p>
+                        <button class="text-btn" onclick="sendResetCode()">Get Verification Code</button>
+                        <input type="text" id="resetCodeInput" placeholder="Verification Code" class="hidden">
+                        <input type="password" id="finalNewPass" placeholder="Enter New Password">
+                        <button class="w-btn login-btn" onclick="processPasswordChange()">Update Password</button>
+                    </div>
+                </div>
+
+                <hr class="profile-hr">
+
+                <div class="danger-zone">
+                    <button class="p-btn logout" onclick="handleLogout()">Log Out <i class="fas fa-sign-out-alt"></i></button>
+                    <button class="p-btn delete" onclick="confirmDeleteAccount()">Delete Account <i class="fas fa-user-slash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="taskModal" class="modal hidden overlay-z">
+        <div class="modal-rectangle">
+            <span class="modal-close" onclick="closeModal('taskModal')">&times;</span>
+            <div class="modal-inner">
+                <div class="priority-tag-row">
+                    <span id="modalPriorityCircle" class="dot"></span>
+                    <span id="modalPriorityText" class="tag-label">PRIORITY</span>
+                </div>
+                <div class="modal-grid">
+                    <div class="modal-left">
+                        <div class="modal-field">
+                            <span class="small-label">TASK TITLE</span>
+                            <h2 id="modalTitle" class="modal-h2">Title</h2>
+                        </div>
+                        <div class="modal-field">
+                            <span class="small-label">DESCRIPTION</span>
+                            <div id="modalDesc" class="modal-desc-box">Details...</div>
+                        </div>
+                    </div>
+                    <div class="modal-right">
+                        <div class="meta-box">
+                            <span class="small-label">PROJECT</span>
+                            <div id="modalProject" class="status-pill" style="margin-top: 0; background: var(--border); color: var(--text); border: none;">PERSONAL</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="small-label">REPEATS</span>
+                            <div id="modalRepeat" class="status-pill" style="margin-top: 0; background: var(--bg); color: var(--text-dim); border: 1px solid var(--border);">NONE</div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="small-label">CREATED DATE</span>
+                            <div id="modalCreatedDate" class="val-text"></div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="small-label">DUE & REMINDER</span>
+                            <div id="modalDate" class="val-text"></div>
+                        </div>
+                        <div class="meta-box">
+                            <span class="small-label">CURRENT STATUS</span>
+                            <div id="modalStatusBadge" class="status-pill">PENDING</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div id="modalSubtaskList" style="margin-bottom: 15px;"></div>
+            
+            <div class="modal-footer-modern">
+                <button id="modalFocusBtn" class="m-btn-break" style="color: var(--success); background: #10b98115;">
+                    <i class="fas fa-crosshairs"></i> Focus
+                </button>
+                
+                <button id="modalBreakdownBtn" class="m-btn-break">
+                    <i class="fas fa-layer-group"></i> Break Down
+                </button>
+
+                <button id="modalRevertBtn" class="m-btn-break" style="color: var(--medium); background: #f59e0b15; display: none;">
+                    <i class="fas fa-object-group"></i> Merge Back
+                </button>
+
+                <button id="modalArchiveBtn" class="m-btn-del" style="background: #64748b15; color: #64748b;">
+                    <i class="fas fa-archive"></i> Archive
+                </button>
+                
+                <button id="modalRestoreBtn" class="m-btn-edit" style="background: #10b98115; color: #10b981; display: none;">
+                    <i class="fas fa-box-open"></i> Unarchive
+                </button>
+                
+                <button id="modalStopRepeatBtn" class="m-btn-del" style="background: #f59e0b15; color: #f59e0b; display: none;">
+                    <i class="fas fa-redo-alt"></i> Stop Repeat
+                </button>
+                
+                <button id="modalEditBtn" class="m-btn-edit">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+                
+                <button id="modalDeleteBtn" class="m-btn-del">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="daySummaryModal" class="modal hidden">
+        <div class="modal-rectangle">
+            <span class="modal-close" onclick="closeModal('daySummaryModal')">&times;</span>
+            <h2 id="summaryDateTitle" style="font-weight:900; margin-bottom:25px;">Agenda</h2>
+            <div id="summaryList" class="day-list-scroll"></div>
+        </div>
+    </div>
+
+    <div id="triageModal" class="modal hidden overlay-z">
+        <div class="modal-rectangle">
+            <h2 style="font-weight:900; margin-bottom:10px;">
+                <i class="fas fa-exclamation-triangle" style="color:var(--medium)"></i> Morning Triage
+            </h2>
+            <p style="color:var(--text-dim); margin-bottom:25px; font-weight: 600;">
+                You have overdue tasks. Let's clear the clutter before you start your day.
+            </p>
+            <div id="triageList" class="day-list-scroll" style="max-height: 350px; padding-right: 10px; margin-bottom: 25px;"></div>
+            <button id="applyTriageBtn" class="elite-save-btn">
+                Apply Workflow <i class="fas fa-magic"></i>
+            </button>
+        </div>
+    </div>
+    <div id="bulkActionBar" class="bulk-bar hidden">
+        <div class="bulk-group">
+            <div class="bulk-count-pill"><span id="selectedCount">0</span> Selected</div>
+            <button class="bulk-sub-btn" onclick="toggleSelectAll()">Select All</button>
+        </div>
+
+        <div class="bulk-sep"></div>
+
+        <div class="bulk-group">
+            <button class="bulk-btn archive" onclick="applyBulkAction('archive')">
+                <i class="fas fa-archive"></i> Archive
+            </button>
+            <button class="bulk-btn delete" onclick="applyBulkAction('delete')">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+        </div>
+
+        <div class="bulk-sep"></div>
+
+        <button class="bulk-sub-btn cancel" onclick="clearSelection()">Cancel</button>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
